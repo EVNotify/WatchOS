@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C275D4012373850D007A8903 /* EVWatch WatchKitapp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C275D4002373850D007A8903 /* EVWatch WatchKitapp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C275D4072373850D007A8903 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C275D4052373850D007A8903 /* Interface.storyboard */; };
+		C275D40923738510007A8903 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C275D40823738510007A8903 /* Assets.xcassets */; };
+		C275D41023738510007A8903 /* EVWatch WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C275D40F23738510007A8903 /* EVWatch WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C275D41923738510007A8903 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D41823738510007A8903 /* ExtensionDelegate.swift */; };
+		C275D41F23738510007A8903 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D41E23738510007A8903 /* ComplicationController.swift */; };
+		C275D42123738510007A8903 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C275D42023738510007A8903 /* Assets.xcassets */; };
+		C275D42423738510007A8903 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C275D42323738510007A8903 /* Preview Assets.xcassets */; };
+		C2B431A2237CC20F00BD9432 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D41423738510007A8903 /* ContentView.swift */; };
+		C2B431A3237CC31800BD9432 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D41623738510007A8903 /* HostingController.swift */; };
+		C2C932F82377644500B339DE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D4362373859D007A8903 /* LoginView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C275D4022373850D007A8903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C275D3F62373850D007A8903 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C275D3FF2373850D007A8903;
+			remoteInfo = "EVWatch WatchKit App";
+		};
+		C275D41123738510007A8903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C275D3F62373850D007A8903 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C275D40E23738510007A8903;
+			remoteInfo = "EVWatch WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C275D42C23738510007A8903 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C275D41023738510007A8903 /* EVWatch WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C275D43023738510007A8903 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				C275D4012373850D007A8903 /* EVWatch WatchKitapp.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C275D3FC2373850D007A8903 /* EVWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EVWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C275D4002373850D007A8903 /* EVWatch WatchKitapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EVWatch WatchKitapp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C275D4062373850D007A8903 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		C275D40823738510007A8903 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C275D40A23738510007A8903 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C275D40F23738510007A8903 /* EVWatch WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EVWatch WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C275D41423738510007A8903 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = "../EVWatch WatchKit App/ContentView.swift"; sourceTree = "<group>"; };
+		C275D41623738510007A8903 /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HostingController.swift; path = "../EVWatch WatchKit App/HostingController.swift"; sourceTree = "<group>"; };
+		C275D41823738510007A8903 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		C275D41E23738510007A8903 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		C275D42023738510007A8903 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C275D42323738510007A8903 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C275D42523738510007A8903 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C275D4362373859D007A8903 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C275D40C23738510007A8903 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C275D3F52373850D007A8903 = {
+			isa = PBXGroup;
+			children = (
+				C275D4042373850D007A8903 /* EVWatch WatchKit App */,
+				C275D41323738510007A8903 /* EVWatch WatchKit Extension */,
+				C275D3FD2373850D007A8903 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C275D3FD2373850D007A8903 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C275D3FC2373850D007A8903 /* EVWatch.app */,
+				C275D4002373850D007A8903 /* EVWatch WatchKitapp.app */,
+				C275D40F23738510007A8903 /* EVWatch WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C275D4042373850D007A8903 /* EVWatch WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				C275D4052373850D007A8903 /* Interface.storyboard */,
+				C275D40823738510007A8903 /* Assets.xcassets */,
+				C275D40A23738510007A8903 /* Info.plist */,
+			);
+			path = "EVWatch WatchKit App";
+			sourceTree = "<group>";
+		};
+		C275D41323738510007A8903 /* EVWatch WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C275D41623738510007A8903 /* HostingController.swift */,
+				C275D4362373859D007A8903 /* LoginView.swift */,
+				C275D41423738510007A8903 /* ContentView.swift */,
+				C275D41823738510007A8903 /* ExtensionDelegate.swift */,
+				C275D41E23738510007A8903 /* ComplicationController.swift */,
+				C275D42023738510007A8903 /* Assets.xcassets */,
+				C275D42523738510007A8903 /* Info.plist */,
+				C275D42223738510007A8903 /* Preview Content */,
+			);
+			path = "EVWatch WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		C275D42223738510007A8903 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C275D42323738510007A8903 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C275D3FB2373850D007A8903 /* EVWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C275D43123738510007A8903 /* Build configuration list for PBXNativeTarget "EVWatch" */;
+			buildPhases = (
+				C275D3FA2373850D007A8903 /* Resources */,
+				C275D43023738510007A8903 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C275D4032373850D007A8903 /* PBXTargetDependency */,
+			);
+			name = EVWatch;
+			productName = EVWatch;
+			productReference = C275D3FC2373850D007A8903 /* EVWatch.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		C275D3FF2373850D007A8903 /* EVWatch WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C275D42D23738510007A8903 /* Build configuration list for PBXNativeTarget "EVWatch WatchKit App" */;
+			buildPhases = (
+				C275D3FE2373850D007A8903 /* Resources */,
+				C275D42C23738510007A8903 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C275D41223738510007A8903 /* PBXTargetDependency */,
+			);
+			name = "EVWatch WatchKit App";
+			productName = "EVWatch WatchKit App";
+			productReference = C275D4002373850D007A8903 /* EVWatch WatchKitapp.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		C275D40E23738510007A8903 /* EVWatch WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C275D42923738510007A8903 /* Build configuration list for PBXNativeTarget "EVWatch WatchKit Extension" */;
+			buildPhases = (
+				C275D40B23738510007A8903 /* Sources */,
+				C275D40C23738510007A8903 /* Frameworks */,
+				C275D40D23738510007A8903 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EVWatch WatchKit Extension";
+			productName = "EVWatch WatchKit Extension";
+			productReference = C275D40F23738510007A8903 /* EVWatch WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C275D3F62373850D007A8903 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = EVSalomon;
+				TargetAttributes = {
+					C275D3FB2373850D007A8903 = {
+						CreatedOnToolsVersion = 11.2;
+						LastSwiftMigration = 1120;
+					};
+					C275D3FF2373850D007A8903 = {
+						CreatedOnToolsVersion = 11.2;
+						LastSwiftMigration = 1120;
+					};
+					C275D40E23738510007A8903 = {
+						CreatedOnToolsVersion = 11.2;
+					};
+				};
+			};
+			buildConfigurationList = C275D3F92373850D007A8903 /* Build configuration list for PBXProject "EVWatch" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C275D3F52373850D007A8903;
+			productRefGroup = C275D3FD2373850D007A8903 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C275D3FB2373850D007A8903 /* EVWatch */,
+				C275D3FF2373850D007A8903 /* EVWatch WatchKit App */,
+				C275D40E23738510007A8903 /* EVWatch WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C275D3FA2373850D007A8903 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C275D3FE2373850D007A8903 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C275D40923738510007A8903 /* Assets.xcassets in Resources */,
+				C275D4072373850D007A8903 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C275D40D23738510007A8903 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C275D42423738510007A8903 /* Preview Assets.xcassets in Resources */,
+				C275D42123738510007A8903 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C275D40B23738510007A8903 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2C932F82377644500B339DE /* LoginView.swift in Sources */,
+				C2B431A2237CC20F00BD9432 /* ContentView.swift in Sources */,
+				C275D41923738510007A8903 /* ExtensionDelegate.swift in Sources */,
+				C2B431A3237CC31800BD9432 /* HostingController.swift in Sources */,
+				C275D41F23738510007A8903 /* ComplicationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C275D4032373850D007A8903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C275D3FF2373850D007A8903 /* EVWatch WatchKit App */;
+			targetProxy = C275D4022373850D007A8903 /* PBXContainerItemProxy */;
+		};
+		C275D41223738510007A8903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C275D40E23738510007A8903 /* EVWatch WatchKit Extension */;
+			targetProxy = C275D41123738510007A8903 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C275D4052373850D007A8903 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C275D4062373850D007A8903 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C275D42723738510007A8903 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C275D42823738510007A8903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C275D42A23738510007A8903 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"EVWatch WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = M6NVW22MCV;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "EVWatch WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = de.evnotify.de.EVWatch.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "EVWatch WatchKit Extension";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.1;
+			};
+			name = Debug;
+		};
+		C275D42B23738510007A8903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"EVWatch WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = M6NVW22MCV;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "EVWatch WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = de.evnotify.de.EVWatch.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "EVWatch WatchKit Extension";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.1;
+			};
+			name = Release;
+		};
+		C275D42E23738510007A8903 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6NVW22MCV;
+				IBSC_MODULE = EVWatch_WatchKit_Extension;
+				INFOPLIST_FILE = "EVWatch WatchKit App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = de.evnotify.de.EVWatch.watchkitapp;
+				PRODUCT_NAME = "EVWatch WatchKitapp";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "EVWatch WatchKit App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.1;
+			};
+			name = Debug;
+		};
+		C275D42F23738510007A8903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6NVW22MCV;
+				IBSC_MODULE = EVWatch_WatchKit_Extension;
+				INFOPLIST_FILE = "EVWatch WatchKit App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = de.evnotify.de.EVWatch.watchkitapp;
+				PRODUCT_NAME = "EVWatch WatchKitapp";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "EVWatch WatchKit App-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.1;
+			};
+			name = Release;
+		};
+		C275D43223738510007A8903 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M6NVW22MCV;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.evnotify.de.EVWatch;
+				PRODUCT_NAME = EVWatch;
+				SWIFT_OBJC_BRIDGING_HEADER = "EVWatch-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C275D43323738510007A8903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M6NVW22MCV;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.evnotify.de.EVWatch;
+				PRODUCT_NAME = EVWatch;
+				SWIFT_OBJC_BRIDGING_HEADER = "EVWatch-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C275D3F92373850D007A8903 /* Build configuration list for PBXProject "EVWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C275D42723738510007A8903 /* Debug */,
+				C275D42823738510007A8903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C275D42923738510007A8903 /* Build configuration list for PBXNativeTarget "EVWatch WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C275D42A23738510007A8903 /* Debug */,
+				C275D42B23738510007A8903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C275D42D23738510007A8903 /* Build configuration list for PBXNativeTarget "EVWatch WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C275D42E23738510007A8903 /* Debug */,
+				C275D42F23738510007A8903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C275D43123738510007A8903 /* Build configuration list for PBXNativeTarget "EVWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C275D43223738510007A8903 /* Debug */,
+				C275D43323738510007A8903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C275D3F62373850D007A8903 /* Project object */;
+}
