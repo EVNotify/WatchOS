@@ -21,12 +21,11 @@ class EVData: ObservableObject {
     @Published var aviableTemp = (minTemp:false,maxTemp:false,inletTemp:false)
     
     func setSoc(newSoc:Double){
+        UserDefaults.standard.set(newSoc, forKey: "soc")
+        if ( soc != newSoc ) {
+            self.reloadComplications()
+        }
         soc = newSoc
-        UserDefaults.standard.set(soc, forKey: "soc")
-        
-        self.reloadComplications()
-        //WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate:userInfo:)
-
     }
     
     private func reloadComplications() {
@@ -35,7 +34,6 @@ class EVData: ObservableObject {
                 for complication in complications {
                     CLKComplicationServer.sharedInstance().reloadTimeline(for: complication)
                 }
-                //WKInterfaceDevice.currentDevice().playHaptic(WKHapticType.click) // haptic only for debugging
             }
         }
     }
@@ -98,7 +96,6 @@ class EVData: ObservableObject {
             } else if ( diffInterval > 10 ) {
                 return .orange
             } else {
-                
                 return .white
             }
         } else {
@@ -165,11 +162,7 @@ class EVData: ObservableObject {
         if ( isLoggedIn ) {
             let token = UserDefaults.standard.string(forKey: "token")!
             let akey = UserDefaults.standard.string(forKey: "akey")!
-                    
-            //let parameters = ["akey":akey,"token":token]
-                    
             var url = URL(string: "https://app.evnotify.de/soc?akey=" + akey + "&token=" + token)!
-            
             var session = URLSession.shared
 
             //now create the URLRequest object using the url object
@@ -197,7 +190,6 @@ class EVData: ObservableObject {
                 do {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                        //print(json)
                         if json.keys.contains("soc_display") {
                             let soc_json = json["soc_display"] as? NSNumber
                             DispatchQueue.main.async {
