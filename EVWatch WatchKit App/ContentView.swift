@@ -24,8 +24,8 @@ class EVData: ObservableObject {
         UserDefaults.standard.set(newSoc, forKey: "soc")
         if ( soc != newSoc ) {
             self.reloadComplications()
+            soc = newSoc
         }
-        soc = newSoc
     }
     
     private func reloadComplications() {
@@ -104,36 +104,40 @@ class EVData: ObservableObject {
     }
     
     func setIsCharging(newState:Bool){
-        isCharging = newState
-        if ( isCharging ) {
-            ladeText = "Ladend"
-        } else {
-            ladeText = "Nicht Ladend"
+        if ( newState != isCharging ) {
+            isCharging = newState
+            if ( isCharging ) {
+                ladeText = "Ladend"
+            } else {
+                ladeText = "Nicht Ladend"
+            }
         }
     }
     
     func setChargeSpeed(newSpeed:String){
-        if ( isCharging ) {
-            chargeSpeed = newSpeed + "kW"
-        } else {
-            chargeSpeed = ""
+        if ( chargeSpeed != newSpeed + "kW" ) {
+            if ( isCharging ) {
+                chargeSpeed = newSpeed + "kW"
+            } else {
+                chargeSpeed = ""
+            }
         }
     }
     
     func setTimestamp(newTime:Double){
-        timestamp = newTime
+        if ( newTime != timestamp ) { timestamp = newTime }
     }
     
     func setTemperatures(newTemp:Double,section:Int){
         switch(section){
         case 0:
-            minTemp = newTemp
+            if ( minTemp != newTemp ) { minTemp = newTemp }
             break;
         case 1:
-            maxTemp = newTemp
+            if ( maxTemp != newTemp ) { maxTemp = newTemp }
             break;
         case 2:
-            inletTemp = newTemp
+            if ( inletTemp != newTemp ) { inletTemp = newTemp }
             break;
         default:
             break;
@@ -358,7 +362,8 @@ class EVData: ObservableObject {
 struct ContentView: View {
     
     @ObservedObject var evdata = EVData()
-    
+    @State private var showingLogoutAlert = false
+
     var body: some View {
         VStack(alignment: .center){
             if ( self.evdata.LoggedIn() ) {
@@ -416,9 +421,17 @@ struct ContentView: View {
                     Text(self.evdata.getTimestamp()).font(Font.custom("Arial", size: 10)).padding(.bottom,20).foregroundColor(self.evdata.getTimestampColor())
                     
                     Button(action: {
-                        self.evdata.setLogout()
+                        self.showingLogoutAlert = true
                     }) {
                         Text("Logout")
+                    }
+                    .alert(isPresented:$showingLogoutAlert) {
+                        Alert(title: Text("Logout"), message: Text("Wollen Sie sich wirklich ausloggen?"), primaryButton: .default(Text("Nein")) {
+                            }, secondaryButton: .default(Text("Ja")){
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.evdata.setLogout()
+                                }
+                            })
                     }
                     
                 }.padding(.bottom,3)
