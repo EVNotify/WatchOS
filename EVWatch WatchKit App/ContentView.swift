@@ -115,9 +115,9 @@ class EVData: ObservableObject {
     }
     
     func setChargeSpeed(newSpeed:String){
-        if ( chargeSpeed != newSpeed + "kW" ) {
+        if ( chargeSpeed != newSpeed + " kW" ) {
             if ( isCharging ) {
-                chargeSpeed = newSpeed + "kW"
+                chargeSpeed = newSpeed + " kW"
             } else {
                 chargeSpeed = ""
             }
@@ -270,7 +270,7 @@ class EVData: ObservableObject {
                                         let chargeSpeed2 = json["dc_battery_power"] as! NSNumber
                                         let formatter = NumberFormatter()
                                         formatter.numberStyle = .decimal
-                                        formatter.maximumFractionDigits = 1
+                                        formatter.maximumFractionDigits = 2
                                         self.setChargeSpeed(newSpeed: String(formatter.string(from: chargeSpeed2) ?? ""))
                                     } else {
                                         self.setChargeSpeed(newSpeed: "")
