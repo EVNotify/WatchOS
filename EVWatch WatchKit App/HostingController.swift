@@ -9,14 +9,8 @@ import WatchKit
 import Foundation
 import SwiftUI
 
-class HostingController: WKHostingController<LoginView> {
-    override var body: LoginView {
-        
-        let token = UserDefaults.standard.string(forKey: "token")
-        var isLoggedin = false;
-        if ( token != nil ) {
-            isLoggedin = true
-        }
-        return LoginView(isLoggedin:isLoggedin)
+class HostingController: WKHostingController<ContentView> {
+    override var body: ContentView {
+        return ContentView()
     }
 }

@@ -17,7 +17,6 @@
 		C275D42423738510007A8903 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C275D42323738510007A8903 /* Preview Assets.xcassets */; };
 		C2B431A2237CC20F00BD9432 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D41423738510007A8903 /* ContentView.swift */; };
 		C2B431A3237CC31800BD9432 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D41623738510007A8903 /* HostingController.swift */; };
-		C2C932F82377644500B339DE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C275D4362373859D007A8903 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +75,6 @@
 		C275D42023738510007A8903 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C275D42323738510007A8903 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C275D42523738510007A8903 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C275D4362373859D007A8903 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				C275D41623738510007A8903 /* HostingController.swift */,
-				C275D4362373859D007A8903 /* LoginView.swift */,
 				C275D41423738510007A8903 /* ContentView.swift */,
 				C275D41823738510007A8903 /* ExtensionDelegate.swift */,
 				C275D41E23738510007A8903 /* ComplicationController.swift */,
@@ -272,7 +269,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2C932F82377644500B339DE /* LoginView.swift in Sources */,
 				C2B431A2237CC20F00BD9432 /* ContentView.swift in Sources */,
 				C275D41923738510007A8903 /* ExtensionDelegate.swift in Sources */,
 				C2B431A3237CC31800BD9432 /* HostingController.swift in Sources */,
