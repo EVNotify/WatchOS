@@ -444,11 +444,13 @@ struct ContentView: View {
                     }
                     .alert(isPresented:$showingLogoutAlert) {
                         Alert(title: Text("Logout"), message: Text("Wollen Sie sich wirklich ausloggen?"), primaryButton: .default(Text("Nein")) {
+                                self.showingLogoutAlert = false
                             }, secondaryButton: .default(Text("Ja")){
+                                self.showingLogoutAlert = false
+                                self.isDisabled = false;
+                                self.akey = ""
+                                self.pass = ""
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.isDisabled = false;
-                                    self.akey = ""
-                                    self.pass = ""
                                     self.evdata.setLogout()
                                 }
                             })
@@ -505,9 +507,10 @@ struct ContentView: View {
                                     
                                     DispatchQueue.main.async {
                                         self.evdata.setLoginStatus(newState: true)
+                                        self.evdata.startRefresh()
                                     }
                                     
-                                    self.evdata.startRefresh()
+                                    
                                     
                                 } else {
                                     self.pass = ""
