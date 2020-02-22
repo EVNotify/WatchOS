@@ -10,9 +10,9 @@ import SwiftUI
 class EVData: ObservableObject {
     @Published var soc: Double = 0.0
     @Published var isCharging: Bool = false
-    @Published var chargeSpeed:String = ""
+    @Published var chargeSpeed:Double = 0.00
     @Published var timestamp:Double = 0.0
-    @Published var ladeText:String = "Nicht Ladend"
+    @Published var ladeText:String = "Not Charging"
     @Published var minTemp: Double = 0.0
     @Published var maxTemp: Double = 0.0
     @Published var inletTemp: Double = 0.0
@@ -92,13 +92,17 @@ class EVData: ObservableObject {
         
         if ( self.isConnected ) {
             if ( diffInterval >= 1 && diffInterval < 10 ) {
+                UserDefaults.standard.set("1", forKey: "timestampColor")
                 return .yellow
             } else if ( diffInterval > 10 ) {
+                UserDefaults.standard.set("2", forKey: "timestampColor")
                 return .orange
             } else {
+                UserDefaults.standard.set("0", forKey: "timestampColor")
                 return .white
             }
         } else {
+            UserDefaults.standard.set("3", forKey: "timestampColor")
             return .red
         }
     }
@@ -107,37 +111,73 @@ class EVData: ObservableObject {
         if ( newState != isCharging ) {
             isCharging = newState
             if ( isCharging ) {
-                ladeText = "Ladend"
+                ladeText = "Charging"
             } else {
-                ladeText = "Nicht Ladend"
+                ladeText = "Not Charging"
             }
         }
     }
     
-    func setChargeSpeed(newSpeed:String){
-        if ( chargeSpeed != newSpeed + " kW" ) {
+    func setChargeSpeed(newSpeed:Double){
+        if ( chargeSpeed != newSpeed ) {
             if ( isCharging ) {
-                chargeSpeed = newSpeed + " kW"
+                chargeSpeed = newSpeed
             } else {
-                chargeSpeed = ""
+                chargeSpeed = 0.00
             }
+        }
+    }
+    
+    func getChargeSpeed() -> String{
+        if ( isCharging ) {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter.string(from: chargeSpeed as NSNumber)! + " kW"
+        } else {
+            return ""
         }
     }
     
     func setTimestamp(newTime:Double){
-        if ( newTime != timestamp ) { timestamp = newTime }
+        if ( newTime != timestamp ) {
+            timestamp = newTime
+            
+            
+            let date = Date(timeIntervalSince1970: timestamp)
+            let dateFormatter2 = DateFormatter()
+            dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+            dateFormatter2.locale = NSLocale.current
+            dateFormatter2.dateFormat = "HH:mm:ss" //Specify your format that you want
+            
+            UserDefaults.standard.set(dateFormatter2.string(from: date), forKey: "timestamp")
+        }
     }
     
     func setTemperatures(newTemp:Double,section:Int){
         switch(section){
         case 0:
-            if ( minTemp != newTemp ) { minTemp = newTemp }
+            if ( minTemp != newTemp ) {
+                minTemp = newTemp
+                
+                let ret = Int(Darwin.round(newTemp))
+                UserDefaults.standard.set("\(ret)°", forKey: "minTemp")
+            }
             break;
         case 1:
-            if ( maxTemp != newTemp ) { maxTemp = newTemp }
+            if ( maxTemp != newTemp ) {
+                maxTemp = newTemp
+                let ret = Int(Darwin.round(newTemp))
+                UserDefaults.standard.set("\(ret)°", forKey: "maxTemp")
+            }
             break;
         case 2:
-            if ( inletTemp != newTemp ) { inletTemp = newTemp }
+            if ( inletTemp != newTemp ) {
+                inletTemp = newTemp
+                
+                let ret = Int(Darwin.round(newTemp))
+                UserDefaults.standard.set("\(ret)°", forKey: "inletTemp")
+            }
             break;
         default:
             break;
@@ -162,8 +202,8 @@ class EVData: ObservableObject {
         let token = UserDefaults.standard.string(forKey: "token")
         if ( token != nil ) {
             isLoggedIn = true
+            self.startRefresh()
         }
-        self.startRefresh()
     }
     
     func startRefresh(){
@@ -262,6 +302,9 @@ class EVData: ObservableObject {
                                 
                                 DispatchQueue.main.async {
                                     
+                                    let timestamp2 = json["last_extended"] as! NSNumber
+                                    self.setTimestamp(newTime: timestamp2.doubleValue)
+                                    
                                     let chargingJson = json["charging"] as? Bool
                                     if ( chargingJson != nil ) {
                                         let charging2 = json["charging"] as! Bool
@@ -273,19 +316,11 @@ class EVData: ObservableObject {
                                     let chargeSpeedJson = json["dc_battery_power"] as? NSNumber
                                     if ( chargeSpeedJson != nil ) {
                                         let chargeSpeed2 = json["dc_battery_power"] as! NSNumber
-                                        let formatter = NumberFormatter()
-                                        formatter.numberStyle = .decimal
-                                        formatter.maximumFractionDigits = 2
-                                        self.setChargeSpeed(newSpeed: String(formatter.string(from: chargeSpeed2) ?? ""))
+                                        self.setChargeSpeed(newSpeed: chargeSpeed2.doubleValue)
                                     } else {
-                                        self.setChargeSpeed(newSpeed: "")
+                                        self.setChargeSpeed(newSpeed: 0.00)
                                     }
-                                    
-                                    
-                                    
-                                    let timestamp2 = json["last_extended"] as! NSNumber
-                                    self.setTimestamp(newTime: timestamp2.doubleValue)
-                                    
+
                                     let formatter_temp = NumberFormatter()
                                     formatter_temp.numberStyle = .decimal
                                     formatter_temp.maximumFractionDigits = 0
@@ -387,7 +422,7 @@ struct ContentView: View {
                 ScrollView {
                 
                     Text(self.evdata.getSoc() + "%").padding(.bottom,5).font(Font.custom("Arial", size: 42)).foregroundColor(self.evdata.getSocColor())
-                    Text(self.evdata.chargeSpeed).font(.footnote).foregroundColor(.blue)
+                    Text(self.evdata.getChargeSpeed()).font(.footnote).foregroundColor(.blue)
                     Text(self.evdata.ladeText).padding(.bottom,10).font(.subheadline)
                     
                     if ( self.evdata.aviableTemp.minTemp || self.evdata.aviableTemp.maxTemp || self.evdata.aviableTemp.inletTemp ) {

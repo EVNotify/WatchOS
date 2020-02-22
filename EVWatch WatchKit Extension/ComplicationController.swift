@@ -17,7 +17,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
-        handler(NSDate(timeIntervalSinceNow: 10))
+        //handler(NSDate(timeIntervalSinceNow: 10))
+        handler(NSDate(timeIntervalSinceNow: 60 * 60))
     }
     
     func getTimelineStartDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
@@ -42,11 +43,28 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let template = CLKComplicationTemplateCircularSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: self.getSocStr())
             
-            if progress < 15 { headerTextProvider.tintColor = .red }
-            else if progress < 30 { headerTextProvider.tintColor = .orange }
-            else if progress < 50 { headerTextProvider.tintColor = .yellow }
-            else {
-                headerTextProvider.tintColor =  .green
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                print("TEST: " + colorCode);
+                switch(colorCode){
+                    case "0":
+                        headerTextProvider.tintColor = .white
+                        break;
+                    case "1":
+                        headerTextProvider.tintColor = .yellow
+                        break;
+                    case "2":
+                        headerTextProvider.tintColor = .orange
+                        break;
+                    case "3":
+                        headerTextProvider.tintColor = .red
+                        break;
+                    default:
+                        headerTextProvider.tintColor = .white
+                }
+            } else {
+                headerTextProvider.tintColor = .white
             }
             
             template.textProvider = headerTextProvider
@@ -61,11 +79,27 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let template = CLKComplicationTemplateModularSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: self.getSocStr())
             
-            if progress < 15 { headerTextProvider.tintColor = .red }
-            else if progress < 30 { headerTextProvider.tintColor = .orange }
-            else if progress < 50 { headerTextProvider.tintColor = .yellow }
-            else {
-                headerTextProvider.tintColor =  .green
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                switch(colorCode){
+                    case "0":
+                        headerTextProvider.tintColor = .white
+                        break;
+                    case "1":
+                        headerTextProvider.tintColor = .yellow
+                        break;
+                    case "2":
+                        headerTextProvider.tintColor = .orange
+                        break;
+                    case "3":
+                        headerTextProvider.tintColor = .red
+                        break;
+                    default:
+                        headerTextProvider.tintColor = .white
+                }
+            } else {
+                headerTextProvider.tintColor = .white
             }
             
             template.textProvider = headerTextProvider
@@ -75,6 +109,268 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
             handler(timelineEntry)
             
+        } else if ( complication.family == .modularLarge ) {
+            
+            let progress = self.getSoc()
+            let template = CLKComplicationTemplateModularLargeColumns();
+            
+            let col11TextProvider = CLKSimpleTextProvider(text: "SoC")
+            let col12TextProvider = CLKSimpleTextProvider(text: self.getSocDecStr()+"%")
+            
+            if progress < 15 { col11TextProvider.tintColor = .red }
+            else if progress < 30 { col11TextProvider.tintColor = .orange }
+            else if progress < 50 { col11TextProvider.tintColor = .yellow }
+            else {
+                col11TextProvider.tintColor =  .green
+            }
+            
+            
+            
+            template.row1Column1TextProvider = col11TextProvider
+            template.row1Column2TextProvider = col12TextProvider
+            
+            
+            let col21TextProvider = CLKSimpleTextProvider(text: "Temp")
+            let col22TextProvider = CLKSimpleTextProvider(text:self.getTempStr())
+            template.row2Column1TextProvider = col21TextProvider
+            template.row2Column2TextProvider = col22TextProvider
+            
+            let col31TextProvider = CLKSimpleTextProvider(text: "Last")
+            let col32TextProvider = CLKSimpleTextProvider(text:self.getTimestamp())
+            
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                switch(colorCode){
+                    case "0":
+                        col31TextProvider.tintColor = .white
+                        break;
+                    case "1":
+                        col31TextProvider.tintColor = .yellow
+                        break;
+                    case "2":
+                        col31TextProvider.tintColor = .orange
+                        break;
+                    case "3":
+                        col31TextProvider.tintColor = .red
+                        break;
+                    default:
+                        col31TextProvider.tintColor = .white
+                }
+            } else {
+                col31TextProvider.tintColor = .white
+            }
+                        
+            template.row3Column1TextProvider = col31TextProvider
+            template.row3Column2TextProvider = col32TextProvider
+            
+            let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
+            handler(timelineEntry)
+        } else if ( complication.family == .utilitarianSmall ) {
+        
+        
+            let progress = self.getSoc()
+            let template = CLKComplicationTemplateUtilitarianSmallRingText()
+            let headerTextProvider = CLKSimpleTextProvider(text: self.getSocStr())
+            
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                switch(colorCode){
+                    case "0":
+                        headerTextProvider.tintColor = .white
+                        break;
+                    case "1":
+                        headerTextProvider.tintColor = .yellow
+                        break;
+                    case "2":
+                        headerTextProvider.tintColor = .orange
+                        break;
+                    case "3":
+                        headerTextProvider.tintColor = .red
+                        break;
+                    default:
+                        headerTextProvider.tintColor = .white
+                }
+            } else {
+                headerTextProvider.tintColor = .white
+            }
+            
+            
+            template.textProvider = headerTextProvider
+            template.fillFraction = Float(progress) / 100
+            template.ringStyle = CLKComplicationRingStyle.closed
+            
+            let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
+            handler(timelineEntry)
+            
+            
+            
+        } else if ( complication.family == .extraLarge ) {
+            
+            
+            let progress = self.getSoc()
+            let template = CLKComplicationTemplateExtraLargeRingText()
+            let headerTextProvider = CLKSimpleTextProvider(text: self.getSocDecStr())
+            
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                switch(colorCode){
+                    case "0":
+                        headerTextProvider.tintColor = .white
+                        break;
+                    case "1":
+                        headerTextProvider.tintColor = .yellow
+                        break;
+                    case "2":
+                        headerTextProvider.tintColor = .orange
+                        break;
+                    case "3":
+                        headerTextProvider.tintColor = .red
+                        break;
+                    default:
+                        headerTextProvider.tintColor = .white
+                }
+            } else {
+                headerTextProvider.tintColor = .white
+            }
+            
+            template.textProvider = headerTextProvider
+            template.fillFraction = Float(progress) / 100
+            template.ringStyle = CLKComplicationRingStyle.closed
+            
+            let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
+            handler(timelineEntry)
+        
+        } else if ( complication.family == .graphicCorner ) {
+            
+            let progress = self.getSoc()
+            
+            let template = CLKComplicationTemplateGraphicCornerGaugeText()
+            let outerTextProvider = CLKSimpleTextProvider(text: self.getSocDecStr() + "%")
+            let leadingTextProvider = CLKSimpleTextProvider(text: "0")
+            let trailingTextProvider = CLKSimpleTextProvider(text: "100")
+            
+            
+            
+            
+            
+            template.outerTextProvider = outerTextProvider
+            template.leadingTextProvider = leadingTextProvider
+            template.trailingTextProvider = trailingTextProvider
+            
+            //let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+            var gaugeProvider:CLKSimpleGaugeProvider
+            
+            
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                switch(colorCode){
+                    case "0":
+                        gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+                        break;
+                    case "1":
+                        gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .yellow, fillFraction: Float(progress) / 100)
+                        break;
+                    case "2":
+                        gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .orange, fillFraction: Float(progress) / 100)
+                        break;
+                    case "3":
+                        gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .red, fillFraction: Float(progress) / 100)
+                        break;
+                    default:
+                        gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+                }
+            } else {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+            }
+            /*
+            if progress < 15 {
+                
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .red, fillFraction: Float(progress) / 100)
+                
+            }
+            else if progress < 30 {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .orange, fillFraction: Float(progress) / 100)
+                
+            }
+            else if progress < 50 {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .yellow, fillFraction: Float(progress) / 100)
+            }
+            else {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+            }
+            */
+            
+            /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
+            template.gaugeProvider = gaugeProvider
+            
+            let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
+            handler(timelineEntry)
+        
+        } else if ( complication.family == .graphicCircular ) {
+            
+            let progress = self.getSoc()
+            
+            let template = CLKComplicationTemplateGraphicCircularClosedGaugeText()
+            let centerTextProvider = CLKSimpleTextProvider(text: self.getSocStr())
+            
+            let check = UserDefaults.standard.string(forKey: "timestampColor")
+            if ( check != nil ) {
+                let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
+                switch(colorCode){
+                    case "0":
+                        centerTextProvider.tintColor = .white
+                        break;
+                    case "1":
+                        centerTextProvider.tintColor = .yellow
+                        break;
+                    case "2":
+                        centerTextProvider.tintColor = .orange
+                        break;
+                    case "3":
+                        centerTextProvider.tintColor = .red
+                        break;
+                    default:
+                        centerTextProvider.tintColor = .white
+                }
+            } else {
+                centerTextProvider.tintColor = .white
+            }
+            
+            
+            
+            template.centerTextProvider = centerTextProvider
+                        
+            //let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+            var gaugeProvider:CLKSimpleGaugeProvider
+            
+            if progress < 15 {
+                
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .red, fillFraction: Float(progress) / 100)
+                
+            }
+            else if progress < 30 {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .orange, fillFraction: Float(progress) / 100)
+                
+            }
+            else if progress < 50 {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .yellow, fillFraction: Float(progress) / 100)
+            }
+            else {
+                gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+            }
+            
+            
+            /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
+            template.gaugeProvider = gaugeProvider
+            
+            let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
+            handler(timelineEntry)
+            
+        
         } else {
             handler(nil)
         }
@@ -103,6 +399,23 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
     }
     
+    func getSocDecStr() -> String{
+        let check = UserDefaults.standard.string(forKey: "soc")
+        if ( check != nil ) {
+            var soc_str = UserDefaults.standard.string(forKey: "soc")!
+            let soc = Double(soc_str) ?? 0.0
+            let soc_ns = soc as NSNumber
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+
+            soc_str = formatter.string(from: soc_ns) ?? "0"
+            return soc_str
+        } else {
+            return "0"
+        }
+    }
+    
     func getSoc() -> Double{
         let check = UserDefaults.standard.string(forKey: "soc")
         if ( check != nil ) {
@@ -114,6 +427,29 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
     }
     
+    func getTempStr() -> String{
+        let check = UserDefaults.standard.string(forKey: "minTemp")
+        if ( check != nil ) {
+            let minTemp = UserDefaults.standard.string(forKey: "minTemp")!
+            let maxTemp = UserDefaults.standard.string(forKey: "maxTemp")!
+            let inletTemp = UserDefaults.standard.string(forKey: "inletTemp")!
+            
+            return minTemp + " / " + maxTemp + " / " + inletTemp
+        } else {
+            return "-"
+        }
+    }
+    
+    func getTimestamp() -> String{
+        let check = UserDefaults.standard.string(forKey: "timestamp")
+        if ( check != nil ) {
+            let timestamp = UserDefaults.standard.string(forKey: "timestamp")!
+            return timestamp
+        }
+        return "";
+    }
+    
+    
     // MARK: - Placeholder Templates
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
@@ -122,7 +458,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .modularSmall:
             let modularSmallTemplate = CLKComplicationTemplateModularSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: "75")
-            headerTextProvider.tintColor = .green
+            headerTextProvider.tintColor = .white
             
             modularSmallTemplate.textProvider = headerTextProvider
             modularSmallTemplate.fillFraction = 0.75
@@ -132,12 +468,93 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .circularSmall:
             let modularSmallTemplate = CLKComplicationTemplateCircularSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: "75")
-            headerTextProvider.tintColor = .green
+            headerTextProvider.tintColor = .white
             
             modularSmallTemplate.textProvider = headerTextProvider
             modularSmallTemplate.fillFraction = 0.75
             modularSmallTemplate.ringStyle = CLKComplicationRingStyle.closed
             handler(modularSmallTemplate)
+            break;
+        case .modularLarge:
+            
+            let template = CLKComplicationTemplateModularLargeColumns();
+            
+            let col11TextProvider = CLKSimpleTextProvider(text: "SoC")
+            let col12TextProvider = CLKSimpleTextProvider(text: "75%")
+            col11TextProvider.tintColor = .yellow
+            
+            
+            
+            template.row1Column1TextProvider = col11TextProvider
+            template.row1Column2TextProvider = col12TextProvider
+            
+            
+            let col21TextProvider = CLKSimpleTextProvider(text: "Temp")
+            let col22TextProvider = CLKSimpleTextProvider(text:"20° / 20° / 20°")
+            template.row2Column1TextProvider = col21TextProvider
+            template.row2Column2TextProvider = col22TextProvider
+            
+            let col31TextProvider = CLKSimpleTextProvider(text: "Last")
+            let col32TextProvider = CLKSimpleTextProvider(text:"01.01.2020 00:00:00")
+            col31TextProvider.tintColor = .white
+                        
+            
+            template.row3Column1TextProvider = col31TextProvider
+            template.row3Column2TextProvider = col32TextProvider
+    
+            handler(template)
+            break;
+        case .utilitarianSmall:
+            
+            let template = CLKComplicationTemplateUtilitarianSmallRingText()
+            let headerTextProvider = CLKSimpleTextProvider(text: "75")
+            headerTextProvider.tintColor = .white
+            
+            template.textProvider = headerTextProvider
+            template.fillFraction = 0.75
+            template.ringStyle = CLKComplicationRingStyle.closed
+            handler(template)
+            break;
+        case .extraLarge:
+            
+            let template = CLKComplicationTemplateExtraLargeRingText()
+            let headerTextProvider = CLKSimpleTextProvider(text: "75")
+            headerTextProvider.tintColor = .white
+            
+            template.textProvider = headerTextProvider
+            template.fillFraction = 0.75
+            template.ringStyle = CLKComplicationRingStyle.closed
+            handler(template)
+            
+            break;
+        case .graphicCorner:
+            let template = CLKComplicationTemplateGraphicCornerGaugeText()
+            let outerTextProvider = CLKSimpleTextProvider(text: "75%")
+            let leadingTextProvider = CLKSimpleTextProvider(text: "0")
+            let trailingTextProvider = CLKSimpleTextProvider(text: "100")
+            
+            template.outerTextProvider = outerTextProvider
+            template.leadingTextProvider = leadingTextProvider
+            template.trailingTextProvider = trailingTextProvider
+            
+            let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: 0.75)
+            
+            /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
+            template.gaugeProvider = gaugeProvider
+            handler(template)
+            break;
+        case .graphicCircular:
+            
+            let template = CLKComplicationTemplateGraphicCircularClosedGaugeText()
+            let centerTextProvider = CLKSimpleTextProvider(text: "75")
+            template.centerTextProvider = centerTextProvider
+           
+            let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: 0.75)
+            
+            /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
+            template.gaugeProvider = gaugeProvider
+            handler(template)
+            
             break;
         default:
             handler(nil)
