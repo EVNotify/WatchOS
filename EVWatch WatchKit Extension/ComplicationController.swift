@@ -17,8 +17,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
-        //handler(NSDate(timeIntervalSinceNow: 10))
-        handler(NSDate(timeIntervalSinceNow: 60 * 60))
+        handler(NSDate(timeIntervalSinceNow: 30 * 60))
     }
     
     func getTimelineStartDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
@@ -46,7 +45,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let check = UserDefaults.standard.string(forKey: "timestampColor")
             if ( check != nil ) {
                 let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
-                print("TEST: " + colorCode);
                 switch(colorCode){
                     case "0":
                         headerTextProvider.tintColor = .white
@@ -456,27 +454,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // This method will be called once per supported complication, and the results will be cached
         switch complication.family{
         case .modularSmall:
-            let modularSmallTemplate = CLKComplicationTemplateModularSmallRingText()
+            let template = CLKComplicationTemplateModularSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: "75")
             headerTextProvider.tintColor = .white
             
-            modularSmallTemplate.textProvider = headerTextProvider
-            modularSmallTemplate.fillFraction = 0.75
-            modularSmallTemplate.ringStyle = CLKComplicationRingStyle.closed
-            handler(modularSmallTemplate)
+            template.textProvider = headerTextProvider
+            template.fillFraction = 0.75
+            template.ringStyle = CLKComplicationRingStyle.closed
+            handler(template)
             break;
         case .circularSmall:
-            let modularSmallTemplate = CLKComplicationTemplateCircularSmallRingText()
+            let template = CLKComplicationTemplateCircularSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: "75")
             headerTextProvider.tintColor = .white
             
-            modularSmallTemplate.textProvider = headerTextProvider
-            modularSmallTemplate.fillFraction = 0.75
-            modularSmallTemplate.ringStyle = CLKComplicationRingStyle.closed
-            handler(modularSmallTemplate)
+            template.textProvider = headerTextProvider
+            template.fillFraction = 0.75
+            template.ringStyle = CLKComplicationRingStyle.closed
+            handler(template)
             break;
         case .modularLarge:
-            
             let template = CLKComplicationTemplateModularLargeColumns();
             
             let col11TextProvider = CLKSimpleTextProvider(text: "SoC")
@@ -495,7 +492,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             template.row2Column2TextProvider = col22TextProvider
             
             let col31TextProvider = CLKSimpleTextProvider(text: "Last")
-            let col32TextProvider = CLKSimpleTextProvider(text:"01.01.2020 00:00:00")
+            let col32TextProvider = CLKSimpleTextProvider(text:"10:09:00")
             col31TextProvider.tintColor = .white
                         
             
@@ -505,7 +502,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             handler(template)
             break;
         case .utilitarianSmall:
-            
             let template = CLKComplicationTemplateUtilitarianSmallRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: "75")
             headerTextProvider.tintColor = .white
@@ -516,7 +512,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             handler(template)
             break;
         case .extraLarge:
-            
             let template = CLKComplicationTemplateExtraLargeRingText()
             let headerTextProvider = CLKSimpleTextProvider(text: "75")
             headerTextProvider.tintColor = .white
@@ -544,7 +539,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             handler(template)
             break;
         case .graphicCircular:
-            
             let template = CLKComplicationTemplateGraphicCircularClosedGaugeText()
             let centerTextProvider = CLKSimpleTextProvider(text: "75")
             template.centerTextProvider = centerTextProvider
@@ -557,10 +551,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             
             break;
         default:
+            print("default");
             handler(nil)
         }
-
-
     }
-    
 }
