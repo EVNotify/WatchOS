@@ -23,7 +23,6 @@ class EVData: ObservableObject {
     func setSoc(newSoc:Double){
         UserDefaults.standard.set(newSoc, forKey: "soc")
         if ( soc != newSoc ) {
-            self.reloadComplications()
             soc = newSoc
         }
     }
@@ -151,6 +150,13 @@ class EVData: ObservableObject {
             dateFormatter2.dateFormat = "HH:mm:ss" //Specify your format that you want
             
             UserDefaults.standard.set(dateFormatter2.string(from: date), forKey: "timestamp")
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
+            
+            UserDefaults.standard.set(dateFormatter.string(from: date), forKey: "timestampLong")
         }
     }
     
@@ -355,6 +361,7 @@ class EVData: ObservableObject {
                                         self.aviableTemp.inletTemp = false
                                     }
                                     self.isConnected = true
+                                    self.reloadComplications()
                                 }
                             } else {
                                 DispatchQueue.main.async {
