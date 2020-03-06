@@ -17,7 +17,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
-        handler(NSDate(timeIntervalSinceNow: 30 * 60))
+        handler(nil)
     }
     
     func getTimelineStartDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
@@ -521,6 +521,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimestamp() -> String{
+        /*
+        let date = Date()
+        let dateFormatter2 = DateFormatter()
+        dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+        dateFormatter2.locale = NSLocale.current
+        dateFormatter2.dateFormat = "HH:mm:ss"
+        return dateFormatter2.string(from: date)*/
         let check = UserDefaults.standard.string(forKey: "timestamp")
         if ( check != nil ) {
             let timestamp = UserDefaults.standard.string(forKey: "timestamp")!
@@ -530,6 +537,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimestampLong() -> String{
+        /*
+        let date = Date()
+        let dateFormatter2 = DateFormatter()
+        dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+        dateFormatter2.locale = NSLocale.current
+        dateFormatter2.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        return dateFormatter2.string(from: date)*/
+        
         let check = UserDefaults.standard.string(forKey: "timestampLong")
         if ( check != nil ) {
             let timestamp = UserDefaults.standard.string(forKey: "timestampLong")!

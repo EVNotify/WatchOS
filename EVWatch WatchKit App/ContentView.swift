@@ -37,7 +37,6 @@ class EVData: ObservableObject {
         }
     }
 
-    
     func getSocColor() -> Color{
         if soc < 15 { return .red }
         else if soc < 30 { return .orange }
@@ -74,13 +73,11 @@ class EVData: ObservableObject {
     }
     
     func getTimestamp() -> String{
-        
         let date = Date(timeIntervalSince1970: timestamp)
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss" //Specify your format that you want
-        
         return dateFormatter.string(from: date)
     }
     
@@ -142,7 +139,6 @@ class EVData: ObservableObject {
         if ( newTime != timestamp ) {
             timestamp = newTime
             
-            
             let date = Date(timeIntervalSince1970: timestamp)
             let dateFormatter2 = DateFormatter()
             dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
@@ -165,7 +161,6 @@ class EVData: ObservableObject {
         case 0:
             if ( minTemp != newTemp ) {
                 minTemp = newTemp
-                
                 let ret = Int(Darwin.round(newTemp))
                 UserDefaults.standard.set("\(ret)°", forKey: "minTemp")
             }
@@ -180,7 +175,6 @@ class EVData: ObservableObject {
         case 2:
             if ( inletTemp != newTemp ) {
                 inletTemp = newTemp
-                
                 let ret = Int(Darwin.round(newTemp))
                 UserDefaults.standard.set("\(ret)°", forKey: "inletTemp")
             }
@@ -204,7 +198,6 @@ class EVData: ObservableObject {
     }
     
     init(){
-        
         let token = UserDefaults.standard.string(forKey: "token")
         if ( token != nil ) {
             isLoggedIn = true
