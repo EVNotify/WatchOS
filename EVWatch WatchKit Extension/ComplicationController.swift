@@ -521,8 +521,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimestamp() -> String{
-        /*
-        let date = Date()
+        /*let date = Date()
         let dateFormatter2 = DateFormatter()
         dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
         dateFormatter2.locale = NSLocale.current
@@ -544,7 +543,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         dateFormatter2.locale = NSLocale.current
         dateFormatter2.dateFormat = "dd.MM.yyyy HH:mm:ss"
         return dateFormatter2.string(from: date)*/
-        
         let check = UserDefaults.standard.string(forKey: "timestampLong")
         if ( check != nil ) {
             let timestamp = UserDefaults.standard.string(forKey: "timestampLong")!

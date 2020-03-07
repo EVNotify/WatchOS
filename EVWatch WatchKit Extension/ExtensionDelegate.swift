@@ -11,12 +11,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
     
     var backgroundUrlSession:URLSession?
     var pendingBackgroundURLTask:WKURLSessionRefreshBackgroundTask?
-    var counter:Int = 0
+    var applicationRefreshBackgroundTask:WKApplicationRefreshBackgroundTask?
+    
+    var connectCount: Int = 0
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
 
         //print("NSURLSession finished to url: ", location)
-      
+        self.connectCount = 0
         do {
             let data = try Data(contentsOf: location)
             if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)  as? [String: Any] {
@@ -45,6 +47,18 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
                     dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
                     
                     UserDefaults.standard.set(dateFormatter.string(from: date), forKey: "timestampLong")
+                    
+                    let timeInterval = NSDate().timeIntervalSince1970
+                    let diffInterval = (timeInterval - timestamp) / 60
+                    
+                    if ( diffInterval >= 1 && diffInterval < 10 ) {
+                        UserDefaults.standard.set("1", forKey: "timestampColor")
+                    } else if ( diffInterval > 10 ) {
+                        UserDefaults.standard.set("2", forKey: "timestampColor")
+                    } else {
+                        UserDefaults.standard.set("0", forKey: "timestampColor")
+                    }
+                    
                     
                     let formatter_temp = NumberFormatter()
                     formatter_temp.numberStyle = .decimal
@@ -85,14 +99,65 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if error != nil {
-            self.pendingBackgroundURLTask?.setTaskCompletedWithSnapshot(false)
-            self.backgroundUrlSession = nil
+            //self.pendingBackgroundURLTask?.setTaskCompletedWithSnapshot(false)
+            //self.backgroundUrlSession = nil
+            self.connectCount += 1
+            updateData()
+        }
+    }
+    
+    func updateData(){
+        if ( self.connectCount <= 4 ) {
+            if var request = self.getRequestForRefreshSoC() {
+            
+                request.httpMethod = "GET" //set http method as GET
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.addValue("application/vnd.hmrc.1.0+json", forHTTPHeaderField: "Accept")
+                
+                let backgroundConfig = URLSessionConfiguration.background(withIdentifier: NSUUID().uuidString)
+                backgroundConfig.sessionSendsLaunchEvents = true
+                backgroundConfig.httpAdditionalHeaders = ["Accept":"application/vnd.hmrc.1.0+json","Content-Type":"application/json"]
+                //Be sure to set self as delegate on this urlSession
+                let urlSession = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
+                let downloadTask = urlSession.downloadTask(with: request)
+                
+                //print("downloadTask")
+                //print(downloadTask)
+                downloadTask.resume()
+            }
+            
+            if var request = self.getRequestForRefreshExtend() {
+            
+                request.httpMethod = "GET" //set http method as GET
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.addValue("application/vnd.hmrc.1.0+json", forHTTPHeaderField: "Accept")
+                
+                let backgroundConfig = URLSessionConfiguration.background(withIdentifier: NSUUID().uuidString)
+                backgroundConfig.sessionSendsLaunchEvents = true
+                backgroundConfig.httpAdditionalHeaders = ["Accept":"application/vnd.hmrc.1.0+json","Content-Type":"application/json"]
+                //Be sure to set self as delegate on this urlSession
+                let urlSession = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
+                let downloadTaskExt = urlSession.downloadTask(with: request)
+                
+                //print("downloadTaskExt")
+                //print(downloadTaskExt)
+                
+                downloadTaskExt.resume()
+            }
+        
+            scheduleSnapshot()
+            reloadComplications()
+        } else {
             scheduleSnapshot()
         }
+        self.pendingBackgroundURLTask?.setTaskCompletedWithSnapshot(false)
+        self.backgroundUrlSession = nil
+        self.applicationRefreshBackgroundTask?.setTaskCompletedWithSnapshot(false)
     }
     
     func scheduleSnapshot(){
         let check = UserDefaults.standard.string(forKey: "token")
+        self.connectCount = 0
         if ( check != nil ) {
             /*let date = Date()
             let dateFormatter2 = DateFormatter()
@@ -101,7 +166,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
             dateFormatter2.dateFormat = "HH:mm:ss"
             
             print("scheduleSnapshot: \(dateFormatter2.string(from: date))")*/
-            //counter += 1
             WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: 28.8 * 60), userInfo: nil) { (error: Error?) in
                 if let error = error {
                     print("Error occured while scheduling background refresh: \(error.localizedDescription)")
@@ -137,48 +201,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
                 // Be sure to complete the background task once you’re done.
                 //print("backgroundTask.setTaskCompletedWithSnapshot")
+                self.applicationRefreshBackgroundTask = backgroundTask
+                updateData()
                 
-                if var request = self.getRequestForRefreshSoC() {
-                
-                    request.httpMethod = "GET" //set http method as GET
-                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.addValue("application/vnd.hmrc.1.0+json", forHTTPHeaderField: "Accept")
-                    
-                    let backgroundConfig = URLSessionConfiguration.background(withIdentifier: NSUUID().uuidString)
-                    backgroundConfig.sessionSendsLaunchEvents = true
-                    backgroundConfig.httpAdditionalHeaders = ["Accept":"application/vnd.hmrc.1.0+json","Content-Type":"application/json"]
-                    //Be sure to set self as delegate on this urlSession
-                    let urlSession = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
-                    let downloadTask = urlSession.downloadTask(with: request)
-                    
-                    //print("downloadTask")
-                    //print(downloadTask)
-                    downloadTask.resume()
-                }
-                
-                if var request = self.getRequestForRefreshExtend() {
-                
-                    request.httpMethod = "GET" //set http method as GET
-                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.addValue("application/vnd.hmrc.1.0+json", forHTTPHeaderField: "Accept")
-                    
-                    let backgroundConfig = URLSessionConfiguration.background(withIdentifier: NSUUID().uuidString)
-                    backgroundConfig.sessionSendsLaunchEvents = true
-                    backgroundConfig.httpAdditionalHeaders = ["Accept":"application/vnd.hmrc.1.0+json","Content-Type":"application/json"]
-                    //Be sure to set self as delegate on this urlSession
-                    let urlSession = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
-                    let downloadTaskExt = urlSession.downloadTask(with: request)
-                    
-                    //print("downloadTaskExt")
-                    //print(downloadTaskExt)
-                    
-                    downloadTaskExt.resume()
-                }
-                scheduleSnapshot()
-                reloadComplications()
-                self.pendingBackgroundURLTask?.setTaskCompletedWithSnapshot(false)
-                self.backgroundUrlSession = nil
-                backgroundTask.setTaskCompletedWithSnapshot(false)
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
                 // Snapshot tasks have a unique completion call, make sure to set your expiration date
                 //print("setTaskCompleted")

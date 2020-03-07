@@ -466,7 +466,7 @@ struct ContentView: View {
                         
                     } else {
                         HStack(alignment: .center){
-                            Text("Keine Batterie-Temperaturen vorhanden").font(Font.custom("Arial", size: 10)).frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                            Text("No battery temperatures available").font(Font.custom("Arial", size: 10)).frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                         }.padding(.bottom,20)
                     }
                      
@@ -478,9 +478,9 @@ struct ContentView: View {
                         Text("Logout")
                     }
                     .alert(isPresented:$showingLogoutAlert) {
-                        Alert(title: Text("Logout"), message: Text("Wollen Sie sich wirklich ausloggen?"), primaryButton: .default(Text("Nein")) {
+                        Alert(title: Text("Logout"), message: Text("You really want to log out?"), primaryButton: .default(Text("No")) {
                                 self.showingLogoutAlert = false
-                            }, secondaryButton: .default(Text("Ja")){
+                            }, secondaryButton: .default(Text("Yes")){
                                 self.showingLogoutAlert = false
                                 self.isDisabled = false;
                                 self.akey = ""
@@ -571,7 +571,7 @@ struct ContentView: View {
                     Text("Login")
                 }.disabled(akey.isEmpty || pass.isEmpty || self.isDisabled)
                 .alert(isPresented: $isError ) {
-                    Alert(title: Text(""), message: Text(self.errorText), dismissButton: .default(Text("Erneut versuchen")))
+                    Alert(title: Text(""), message: Text(self.errorText), dismissButton: .default(Text("Try again")))
                 }
             }
         }
