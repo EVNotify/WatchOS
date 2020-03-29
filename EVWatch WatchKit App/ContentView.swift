@@ -75,7 +75,7 @@ class EVData: ObservableObject {
     func getTimestamp() -> String{
         let date = Date(timeIntervalSince1970: timestamp)
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+        dateFormatter.timeZone = .current //Set timezone that you want
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss" //Specify your format that you want
         return dateFormatter.string(from: date)
@@ -141,18 +141,19 @@ class EVData: ObservableObject {
             
             let date = Date(timeIntervalSince1970: timestamp)
             let dateFormatter2 = DateFormatter()
-            dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+            dateFormatter2.timeZone = .current //Set timezone that you want
             dateFormatter2.locale = NSLocale.current
             dateFormatter2.dateFormat = "HH:mm:ss" //Specify your format that you want
-            
             UserDefaults.standard.set(dateFormatter2.string(from: date), forKey: "timestamp")
             
             let dateFormatter = DateFormatter()
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
+            dateFormatter.timeZone = .current //Set timezone that you want
             dateFormatter.locale = NSLocale.current
             dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
-            
             UserDefaults.standard.set(dateFormatter.string(from: date), forKey: "timestampLong")
+            
+            let dateComp = Date()
+            UserDefaults.standard.set(dateFormatter2.string(from: dateComp), forKey: "timestampComp")
         }
     }
     
@@ -201,12 +202,15 @@ class EVData: ObservableObject {
         let token = UserDefaults.standard.string(forKey: "token")
         if ( token != nil ) {
             isLoggedIn = true
+                        
+            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
+                self.startRefresh()
+            }
             self.startRefresh()
         }
     }
     
-    func startRefresh(){
-        
+    @objc func startRefresh(){
         if ( isLoggedIn ) {
             let token = UserDefaults.standard.string(forKey: "token")!
             let akey = UserDefaults.standard.string(forKey: "akey")!
@@ -377,12 +381,6 @@ class EVData: ObservableObject {
                     }
                 })
                 task.resume()
-                
-                if ( self.isLoggedIn ) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                        self.startRefresh()
-                    }
-                }
             }
         }
     }

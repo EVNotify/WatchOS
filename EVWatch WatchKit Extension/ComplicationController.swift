@@ -127,37 +127,39 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     template.row1Column1TextProvider = col11TextProvider
                     template.row1Column2TextProvider = col12TextProvider
                     
-                    
-                    let col21TextProvider = CLKSimpleTextProvider(text: "Temp")
-                    let col22TextProvider = CLKSimpleTextProvider(text:self.getTempStr())
-                    template.row2Column1TextProvider = col21TextProvider
-                    template.row2Column2TextProvider = col22TextProvider
-                    
-                    let col31TextProvider = CLKSimpleTextProvider(text: "Last")
-                    let col32TextProvider = CLKSimpleTextProvider(text:self.getTimestamp())
-                    
+                    let col21TextProvider = CLKSimpleTextProvider(text: "Car")
+                    let col22TextProvider = CLKSimpleTextProvider(text:self.getTimestamp())
+
                     let check = UserDefaults.standard.string(forKey: "timestampColor")
                     if ( check != nil ) {
                         let colorCode = UserDefaults.standard.string(forKey: "timestampColor")!
                         switch(colorCode){
                             case "0":
-                                col31TextProvider.tintColor = .white
+                                col21TextProvider.tintColor = .white
                                 break;
                             case "1":
-                                col31TextProvider.tintColor = .yellow
+                                col21TextProvider.tintColor = .yellow
                                 break;
                             case "2":
-                                col31TextProvider.tintColor = .orange
+                                col21TextProvider.tintColor = .orange
                                 break;
                             case "3":
-                                col31TextProvider.tintColor = .red
+                                col21TextProvider.tintColor = .red
                                 break;
                             default:
-                                col31TextProvider.tintColor = .white
+                                col21TextProvider.tintColor = .white
                         }
                     } else {
-                        col31TextProvider.tintColor = .white
+                        col21TextProvider.tintColor = .white
                     }
+                                        
+                    template.row2Column1TextProvider = col21TextProvider
+                    template.row2Column2TextProvider = col22TextProvider
+                    
+                    let col31TextProvider = CLKSimpleTextProvider(text: "Watch")
+                    let col32TextProvider = CLKSimpleTextProvider(text:self.getActTimestamp())
+                    
+                    
                                 
                     template.row3Column1TextProvider = col31TextProvider
                     template.row3Column2TextProvider = col32TextProvider
@@ -247,7 +249,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     template.leadingTextProvider = leadingTextProvider
                     template.trailingTextProvider = trailingTextProvider
                     
-                    //let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
                     var gaugeProvider:CLKSimpleGaugeProvider
                     
                     
@@ -290,8 +291,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                         gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
                     }
                     */
-                    
-                    /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
                     template.gaugeProvider = gaugeProvider
                     
                     let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
@@ -327,18 +326,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     }
                                 
                     template.centerTextProvider = centerTextProvider
-                                
-                    //let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
+
                     var gaugeProvider:CLKSimpleGaugeProvider
                     
                     if progress < 15 {
-                        
                         gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .red, fillFraction: Float(progress) / 100)
-                        
                     }
                     else if progress < 30 {
                         gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .orange, fillFraction: Float(progress) / 100)
-                        
                     }
                     else if progress < 50 {
                         gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .yellow, fillFraction: Float(progress) / 100)
@@ -347,19 +342,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                         gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
                     }
                     
-                    
-                    /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
                     template.gaugeProvider = gaugeProvider
-                    
                     let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
                     handler(timelineEntry)
                     break;
                 case .graphicBezel:
                     let template = CLKComplicationTemplateGraphicBezelCircularText()
-                    
-                    
-                    
-                    
                     let centerTextProviderTop = CLKSimpleTextProvider(text: self.getTimestampLong())
                     
                     let check = UserDefaults.standard.string(forKey: "timestampColor")
@@ -387,7 +375,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                                 
                     template.textProvider = centerTextProviderTop
                                         
-                    
                     let progress = self.getSoc()
                     
                     let templateCircular = CLKComplicationTemplateGraphicCircularClosedGaugeText()
@@ -418,7 +405,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                                 
                     templateCircular.centerTextProvider = centerTextProvider
                                 
-                    //let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
                     var gaugeProvider:CLKSimpleGaugeProvider
                     
                     if progress < 15 {
@@ -436,13 +422,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     else {
                         gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
                     }
-                    
-                    
-                    /*let gaugeProvider = CLKGaugeProvider(gaugeColor:.yellow, fillFraction:0.75)*/
                     templateCircular.gaugeProvider = gaugeProvider
-                    
                     template.circularTemplate = templateCircular
-                    
                     let timelineEntry = CLKComplicationTimelineEntry(date: NSDate() as Date, complicationTemplate: template)
                     handler(timelineEntry)
                     break;
@@ -453,7 +434,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         } else {
             handler(nil)
         }
-    
     }
     
     func getTimelineEntries(for complication: CLKComplication, before date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
@@ -488,7 +468,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
-
             soc_str = formatter.string(from: soc_ns) ?? "0"
             return soc_str
         } else {
@@ -513,7 +492,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let minTemp = UserDefaults.standard.string(forKey: "minTemp")!
             let maxTemp = UserDefaults.standard.string(forKey: "maxTemp")!
             let inletTemp = UserDefaults.standard.string(forKey: "inletTemp")!
-            
             return minTemp + " / " + maxTemp + " / " + inletTemp
         } else {
             return "-"
@@ -521,12 +499,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimestamp() -> String{
-        /*let date = Date()
-        let dateFormatter2 = DateFormatter()
-        dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
-        dateFormatter2.locale = NSLocale.current
-        dateFormatter2.dateFormat = "HH:mm:ss"
-        return dateFormatter2.string(from: date)*/
         let check = UserDefaults.standard.string(forKey: "timestamp")
         if ( check != nil ) {
             let timestamp = UserDefaults.standard.string(forKey: "timestamp")!
@@ -536,13 +508,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimestampLong() -> String{
-        /*
-        let date = Date()
-        let dateFormatter2 = DateFormatter()
-        dateFormatter2.timeZone = TimeZone(abbreviation: "UTC+1") //Set timezone that you want
-        dateFormatter2.locale = NSLocale.current
-        dateFormatter2.dateFormat = "dd.MM.yyyy HH:mm:ss"
-        return dateFormatter2.string(from: date)*/
         let check = UserDefaults.standard.string(forKey: "timestampLong")
         if ( check != nil ) {
             let timestamp = UserDefaults.standard.string(forKey: "timestampLong")!
@@ -551,6 +516,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         return "";
     }
     
+    func getActTimestamp() -> String{
+        let check = UserDefaults.standard.string(forKey: "timestampComp")
+        if ( check != nil ) {
+            let timestamp = UserDefaults.standard.string(forKey: "timestampComp")!
+            return timestamp
+        }
+        return "";
+    }
     
     // MARK: - Placeholder Templates
     
@@ -590,14 +563,15 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             template.row1Column2TextProvider = col12TextProvider
             
             
-            let col21TextProvider = CLKSimpleTextProvider(text: "Temp")
-            let col22TextProvider = CLKSimpleTextProvider(text:"20° / 20° / 20°")
+            let col21TextProvider = CLKSimpleTextProvider(text: "Car")
+            col21TextProvider.tintColor = .white
+            let col22TextProvider = CLKSimpleTextProvider(text:"10:09:00")
             template.row2Column1TextProvider = col21TextProvider
             template.row2Column2TextProvider = col22TextProvider
             
-            let col31TextProvider = CLKSimpleTextProvider(text: "Last")
+            let col31TextProvider = CLKSimpleTextProvider(text: "Watch")
             let col32TextProvider = CLKSimpleTextProvider(text:"10:09:00")
-            col31TextProvider.tintColor = .white
+            
                         
             
             template.row3Column1TextProvider = col31TextProvider
@@ -655,19 +629,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             
             break;
         case .graphicBezel:
-            
-            
             let template = CLKComplicationTemplateGraphicBezelCircularText()
-            
-            
-            
-            
             let centerTextProviderTop = CLKSimpleTextProvider(text: "01.01.2020 10:09:00")
             centerTextProviderTop.tintColor = .white
-                    
-                        
             template.textProvider = centerTextProviderTop
-                                
             
             let progress = 75
             
@@ -676,7 +641,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                         
             centerTextProvider.tintColor = .white
                        
-                        
             templateCircular.centerTextProvider = centerTextProvider
                         
             //let gaugeProvider = CLKSimpleGaugeProvider(style: .fill, gaugeColor: .green, fillFraction: Float(progress) / 100)
