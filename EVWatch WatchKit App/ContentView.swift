@@ -136,14 +136,18 @@ class EVData: ObservableObject {
     }
     
     func setTimestamp(newTime:Double){
+        
+        let dateFormatter2 = DateFormatter()
+        dateFormatter2.timeZone = .current //Set timezone that you want
+        dateFormatter2.locale = NSLocale.current
+        dateFormatter2.dateFormat = "HH:mm:ss" //Specify your format that you want
+        let dateComp = Date()
+        UserDefaults.standard.set(dateFormatter2.string(from: dateComp), forKey: "timestampComp")
+
         if ( newTime != timestamp ) {
             timestamp = newTime
             
             let date = Date(timeIntervalSince1970: timestamp)
-            let dateFormatter2 = DateFormatter()
-            dateFormatter2.timeZone = .current //Set timezone that you want
-            dateFormatter2.locale = NSLocale.current
-            dateFormatter2.dateFormat = "HH:mm:ss" //Specify your format that you want
             UserDefaults.standard.set(dateFormatter2.string(from: date), forKey: "timestamp")
             
             let dateFormatter = DateFormatter()
@@ -151,9 +155,6 @@ class EVData: ObservableObject {
             dateFormatter.locale = NSLocale.current
             dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
             UserDefaults.standard.set(dateFormatter.string(from: date), forKey: "timestampLong")
-            
-            let dateComp = Date()
-            UserDefaults.standard.set(dateFormatter2.string(from: dateComp), forKey: "timestampComp")
         }
     }
     

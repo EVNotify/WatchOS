@@ -159,8 +159,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     let col31TextProvider = CLKSimpleTextProvider(text: "Watch")
                     let col32TextProvider = CLKSimpleTextProvider(text:self.getActTimestamp())
                     
-                    
-                                
                     template.row3Column1TextProvider = col31TextProvider
                     template.row3Column2TextProvider = col32TextProvider
                     
@@ -542,11 +540,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             break;
         case .circularSmall:
             let template = CLKComplicationTemplateCircularSmallRingText()
-            let headerTextProvider = CLKSimpleTextProvider(text: "75")
+            let headerTextProvider = CLKSimpleTextProvider(text: "60")
             headerTextProvider.tintColor = .white
             
             template.textProvider = headerTextProvider
-            template.fillFraction = 0.75
+            template.fillFraction = 0.60
             template.ringStyle = CLKComplicationRingStyle.closed
             handler(template)
             break;
@@ -581,11 +579,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             break;
         case .utilitarianSmall:
             let template = CLKComplicationTemplateUtilitarianSmallRingText()
-            let headerTextProvider = CLKSimpleTextProvider(text: "75")
+            let headerTextProvider = CLKSimpleTextProvider(text: "50")
             headerTextProvider.tintColor = .white
             
             template.textProvider = headerTextProvider
-            template.fillFraction = 0.75
+            template.fillFraction = 0.50
             template.ringStyle = CLKComplicationRingStyle.closed
             handler(template)
             break;

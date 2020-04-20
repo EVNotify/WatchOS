@@ -22,6 +22,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
                     let soc = soc_json?.doubleValue
                     //let soc2 = Double.random(in: 0 ..< 100.1)
                     UserDefaults.standard.set(soc, forKey: "soc")
+                    
+                    let dateFormatter2 = DateFormatter()
+                    dateFormatter2.timeZone = .current //Set timezone that you want
+                    dateFormatter2.locale = NSLocale.current
+                    dateFormatter2.dateFormat = "HH:mm:ss"
+                    let dateComp = Date()
+                    UserDefaults.standard.set(dateFormatter2.string(from: dateComp), forKey: "timestampComp")
+                    
                     self.reloadComplications()
                 } else if json.keys.contains("last_extended") {
                     let timestamp2 = json["last_extended"] as! NSNumber
