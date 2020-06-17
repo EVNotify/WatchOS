@@ -17,20 +17,26 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
         do {
             let data = try Data(contentsOf: location)
             if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)  as? [String: Any] {
+                var refreshData = false;
                 if json.keys.contains("soc_display") {
-                    let soc_json = json["soc_display"] as? NSNumber
-                    let soc = soc_json?.doubleValue
-                    //let soc2 = Double.random(in: 0 ..< 100.1)
-                    UserDefaults.standard.set(soc, forKey: "soc")
+                    let soc_display_json = json["soc_display"] as? NSNumber
+                    let soc_bms_json = json["soc_bms"] as? NSNumber
                     
+                    if ( soc_display_json != nil ) {
+                        let soc = soc_display_json?.doubleValue
+                        UserDefaults.standard.set(soc, forKey: "soc")
+                    } else if ( soc_bms_json != nil ) {
+                        let soc = soc_bms_json?.doubleValue
+                        UserDefaults.standard.set(soc, forKey: "soc")
+                    }
+
                     let dateFormatter2 = DateFormatter()
                     dateFormatter2.timeZone = .current //Set timezone that you want
                     dateFormatter2.locale = NSLocale.current
                     dateFormatter2.dateFormat = "HH:mm:ss"
                     let dateComp = Date()
                     UserDefaults.standard.set(dateFormatter2.string(from: dateComp), forKey: "timestampComp")
-                    
-                    self.reloadComplications()
+                    refreshData = true;
                 } else if json.keys.contains("last_extended") {
                     let timestamp2 = json["last_extended"] as! NSNumber
                     let timestamp = timestamp2.doubleValue
@@ -96,8 +102,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
                         UserDefaults.standard.set("0°", forKey: "inletTemp")
                     }
                     
-                    self.reloadComplications()
+                    refreshData = true;
                 }
+                
+                if ( refreshData ) {self.reloadComplications()}
                 
                 self.pendingBackgroundURLTask?.setTaskCompletedWithSnapshot(false)
                 self.backgroundUrlSession = nil

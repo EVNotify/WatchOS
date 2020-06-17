@@ -244,11 +244,15 @@ class EVData: ObservableObject {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                         if json.keys.contains("soc_display") {
-                            let soc_json = json["soc_display"] as? NSNumber
+                            let soc_display_json = json["soc_display"] as? NSNumber
+                            let soc_bms_json = json["soc_bms"] as? NSNumber
                             DispatchQueue.main.async {
                                 self.isConnected = true
-                                if ( soc_json != nil ) {
+                                if ( soc_display_json != nil ) {
                                     let socdata = json["soc_display"] as! NSNumber
+                                    self.setSoc(newSoc: socdata.doubleValue)
+                                } else if ( soc_bms_json != nil ) {
+                                    let socdata = json["soc_bms_json"] as! NSNumber
                                     self.setSoc(newSoc: socdata.doubleValue)
                                 }
                             }
@@ -301,7 +305,6 @@ class EVData: ObservableObject {
                     do {
                         //create json object from data
                         if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                                                    
                             if json.keys.contains("last_extended") {
                                 
                                 DispatchQueue.main.async {
