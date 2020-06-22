@@ -23,8 +23,23 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate,URLSessionDownloadDelegat
                     let soc_bms_json = json["soc_bms"] as? NSNumber
                     
                     if ( soc_display_json != nil ) {
-                        let soc = soc_display_json?.doubleValue
-                        UserDefaults.standard.set(soc, forKey: "soc")
+                        
+                        if ( soc_bms_json != nil ) {
+                            let socdata_display = json["soc_display"] as! NSNumber
+                            let socdata_bms = json["soc_bms"] as! NSNumber
+                            
+                            let soc_bms_double = socdata_bms.doubleValue
+                            let soc_display_double = socdata_display.doubleValue
+                            
+                            if ( soc_display_double == 0 && soc_bms_double > 0 ) {
+                                UserDefaults.standard.set(soc_bms_double, forKey: "soc")
+                            } else {
+                                UserDefaults.standard.set(soc_display_double, forKey: "soc")
+                            }
+                        } else {
+                            let soc = soc_display_json?.doubleValue
+                            UserDefaults.standard.set(soc, forKey: "soc")
+                        }
                     } else if ( soc_bms_json != nil ) {
                         let soc = soc_bms_json?.doubleValue
                         UserDefaults.standard.set(soc, forKey: "soc")

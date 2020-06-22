@@ -249,8 +249,27 @@ class EVData: ObservableObject {
                             DispatchQueue.main.async {
                                 self.isConnected = true
                                 if ( soc_display_json != nil ) {
-                                    let socdata = json["soc_display"] as! NSNumber
-                                    self.setSoc(newSoc: socdata.doubleValue)
+                                    
+                                    if ( soc_bms_json != nil ) {
+                                        let socdata_display = json["soc_display"] as! NSNumber
+                                        let socdata_bms = json["soc_bms"] as! NSNumber
+                                        
+                                        let soc_bms_double = socdata_bms.doubleValue
+                                        let soc_display_double = socdata_display.doubleValue
+                                        
+                                        if ( soc_display_double == 0 && soc_bms_double > 0 ) {
+                                            self.setSoc(newSoc: soc_bms_double)
+                                        } else {
+                                            self.setSoc(newSoc: soc_display_double)
+                                        }
+                                        
+                                    } else {
+                                    
+                                        let socdata = json["soc_display"] as! NSNumber
+                                        self.setSoc(newSoc: socdata.doubleValue)
+                                        
+                                    }
+                                    
                                 } else if ( soc_bms_json != nil ) {
                                     let socdata = json["soc_bms_json"] as! NSNumber
                                     self.setSoc(newSoc: socdata.doubleValue)
